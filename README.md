@@ -24,6 +24,9 @@ Welcome to **SkinDx**, an AI-powered skin disease detection and information plat
 - **Frontend**: React/HTML-CSS for user interface
 - **AI Chatbot**: API-based chatbot for disease information
 
+##Datasets
+- https://www.kaggle.com/datasets/shubhamgoel27/dermnet?resource=download
+
 ## Features
 ✔ **AI-powered skin disease detection**  
 ✔ **Confidence percentage for predictions**  
