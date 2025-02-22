@@ -22,7 +22,7 @@ Welcome to **SkinDx**, an AI-powered skin disease detection and information plat
 - **Dataset**: Kaggle Skin Disease Dataset
 - **Backend**: Flask/FastAPI for ML model integration
 - **Frontend**: React/HTML-CSS for user interface
-- **AI Chatbot**: NLP-based chatbot for disease information
+- **AI Chatbot**: API-based chatbot for disease information
 
 ## Features
 ✔ **AI-powered skin disease detection**  
