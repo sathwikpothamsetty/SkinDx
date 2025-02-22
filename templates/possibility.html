@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Health Check Selector</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #ff9a9e, #fad0c4);
+      color: #333333;
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      border-radius: 12px;
+    }
+    .form-section {
+      margin-bottom: 25px;
+      padding: 20px;
+      background-color: #f4f4f9;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    label {
+      font-weight: bold;
+      font-size: 1.1em;
+      display: block;
+      margin-bottom: 5px;
+    }
+    select, button {
+      width: 100%;
+      padding: 12px;
+      margin: 12px 0;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #ffffff;
+      color: #333333;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .result {
+      padding: 15px;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+    .disease-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+    .disease-item img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-right: 15px;
+    }
+    .disease-details {
+      max-width: 600px;
+    }
+    .disease-name {
+      font-weight: bold;
+      font-size: 1.2em;
+      margin-bottom: 5px;
+    }
+    .disease-symptoms {
+      font-size: 0.9em;
+      color: #555;
+      margin-bottom: 5px;
+    }
+    .disease-info {
+      font-size: 0.85em;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>Advanced Health Check Selector</h1>
+  <div class="form-section">
+    <label for="gender">Select Gender:</label>
+    <select id="gender">
+      <option value="">-- Select Gender --</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+  </div>
+
+  <div class="form-section" id="age-section" style="display: none;">
+    <label for="age">Select Age Group:</label>
+    <select id="age">
+      <option value="">-- Select Age Group --</option>
+      <option value="10-12">10-12</option>
+      <option value="13-15">13-15</option>
+      <option value="16-18">16-18</option>
+      <option value="19-21">19-21</option>
+    </select>
+  </div>
+
+  <div class="form-section" id="body-part-section" style="display: none;">
+    <label for="body-part">Select Body Part:</label>
+    <select id="body-part">
+      <option value="">-- Select Body Part --</option>
+      <option value="hands">Hands</option>
+      <option value="legs">Legs</option>
+      <option value="head">Head</option>
+      <option value="chest">Chest</option>
+      <option value="abdomen">Abdomen</option>
+    </select>
+  </div>
+
+  <div class="form-section" id="result-section" style="display: none;">
+    <h2>Possible Diseases:</h2>
+    <div id="disease-list"></div>
+  </div>
+
+  <script>
+    document.getElementById('gender').addEventListener('change', function() {
+      document.getElementById('age-section').style.display = this.value ? 'block' : 'none';
+      document.getElementById('body-part-section').style.display = 'none';
+      document.getElementById('result-section').style.display = 'none';
+    });
+
+    document.getElementById('age').addEventListener('change', function() {
+      document.getElementById('body-part-section').style.display = this.value ? 'block' : 'none';
+      document.getElementById('result-section').style.display = 'none';
+    });
+
+    document.getElementById('body-part').addEventListener('change', function() {
+      const gender = document.getElementById('gender').value;
+      const age = document.getElementById('age').value;
+      const bodyPart = this.value;
+
+      const diseaseData = {
+        male: {
+
+
+
+
+          '10-12': {
+      hands: [
+        { name: 'Eczema', symptoms: 'Itchy, dry, cracked skin.', img: 'https://eczema.org/wp-content/uploads/hand-eczema-shutterstock-small.jpg', info: 'Caused by genetic and environmental factors. Avoid allergens and use moisturizers.' },
+        { name: 'Warts', symptoms: 'Small, grainy skin growths.', img: 'https://excellencemedicalandskincareclinic.com/wp-content/uploads/2022/03/warts-treatment.webp', info: 'Caused by the human papillomavirus (HPV). Avoid skin contact and use topical treatments.' },
+        { name: 'Psoriasis', symptoms: 'Thickened, scaly skin patches.', img: 'https://wmderma.com/wp-content/uploads/2022/04/psoriasis_arms1-1024x740.jpg', info: 'Caused by an immune system issue. Use medicated creams.' },
+        { name: 'Contact Dermatitis', symptoms: 'Red, itchy rash.', img: 'https://media.post.rvohealth.io/wp-content/uploads/2023/06/allergic-contact-dermatitis-body1-300x169.jpg', info: 'Triggered by skin contact with irritants. Avoid triggers and use soothing creams.' },
+        { name: 'Hand-Foot-Mouth Disease', symptoms: 'Painful blisters on hands and feet.', img: 'https://curaprox.in/img/ybc_blog/post/thumb/hand-mouth-foot-thumbnail.webp', info: 'Viral infection. Stay hydrated and rest.' }
+      ],
+      legs: [
+        { name: 'Athlete’s Foot', symptoms: 'Scaly, itchy rash between toes.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRhMziN1dKSE787M4Nn2P2EtMWH-I4BLgGhw&s', info: 'Caused by a fungal infection. Keep feet dry and use antifungal creams.' },
+        { name: 'Shin Splints', symptoms: 'Pain along the shin bone.', img: 'https://orthoinfo.aaos.org/link/ab146592159b4927ac2ead4b5788af99.aspx', info: 'Caused by overuse. Rest and ice for pain relief.' },
+        { name: 'Cellulitis', symptoms: 'Red, swollen skin.', img: 'https://assets.nhs.uk/nhsuk-cms/images/C0215596-Cellulitis_of_the_foot-SPL.original.max-600x600.jpg', info: 'Bacterial infection. Seek medical treatment.' },
+        { name: 'Insect Bites', symptoms: 'Swelling and itchiness.', img: 'https://post.healthline.com/wp-content/uploads/2019/12/Mosquito-Bite-1296x728-Header-1296x728.jpg', info: 'Caused by insect stings. Use antihistamines and creams.' },
+        { name: 'Knee Bursitis', symptoms: 'Swollen, painful knee.', img: 'https://www.clickphysiotherapy.com.au/wp-content/uploads/2019/07/Bursitispraepatellaris-Custom.jpg', info: 'Inflammation of knee bursae. Rest and ice.' }
+      ],
+      head: [
+        { name: 'Scalp Psoriasis', symptoms: 'Flaky, itchy scalp.', img: 'https://wmderma.com/wp-content/uploads/2022/04/psoriasis_arms1-1024x740.jpg', info: 'Chronic condition caused by immune system issues. Use medicated shampoos and creams.' },
+        { name: 'Seborrheic Dermatitis', symptoms: 'Greasy, scaly patches on the scalp.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDcc34uQR1ORr9cT9S_j0F_DSihXB4BPAViQ&s', info: 'Caused by excess oil production. Use medicated shampoos.' },
+        { name: 'Head Lice', symptoms: 'Itchy scalp and small nits.', img: 'https://m4b6f3p8.delivery.rocketcdn.me/app/uploads/2021/04/pediculosisCapitisHeadLice_53777_lg.jpg', info: 'Spread by head-to-head contact. Use lice treatments.' },
+        { name: 'Dandruff', symptoms: 'Flaky white scalp skin.', img: 'https://svenson.com.ph/wp-content/uploads/2024/05/dandruff-optimized.jpg', info: 'Caused by dry skin or oiliness. Use anti-dandruff shampoo.' },
+        { name: 'Tinea Capitis', symptoms: 'Ring-shaped, scaly patches on scalp.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtc3X_NpOMOtGniprruYJeFGt8_gFg2Q0Qow&s', info: 'Fungal infection. Use antifungal medication.' }
+      ],
+      chest: [
+        { name: 'Heat Rash', symptoms: 'Red bumps and itching.', img: 'https://m4b6f3p8.delivery.rocketcdn.me/app/uploads/2021/04/miliariaRubra_31832_lg.jpg', info: 'Caused by blocked sweat glands. Stay cool and wear loose clothes.' },
+        { name: 'Acne', symptoms: 'Pimples and blackheads.', img: 'https://caci.co.nz/cdn/shop/articles/shutterstock_1808063740.jpg?v=1642981741&width=1900', info: 'Hormonal changes often trigger acne. Cleanse the skin regularly and avoid heavy oils.' },
+        { name: 'Boils', symptoms: 'Painful, red lumps.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxtC8a6zj0ojtEoaHtDDKrxyQshtNP3mKyhQ&s', info: 'Caused by bacterial infections. Keep clean and seek treatment if severe.' },
+        { name: 'Chickenpox', symptoms: 'Itchy, red blisters.', img: 'https://images-prod.healthline.com/hlcmsresource/images/Image-Galleries/chickenpox-adults/Chickenpox_man_back-1296x728-slide1.jpg', info: 'Viral infection. Stay hydrated and avoid scratching.' },
+        { name: 'Pityriasis Rosea', symptoms: 'Oval, scaly patches.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIu90duetgsYTB4fBP6oGAEwCjplFLngswaw&s', info: 'Self-resolving rash. Stay cool and hydrated.' }
+      ],
+      abdomen: [
+        { name: 'Ringworm', symptoms: 'Circular, red, scaly patches.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJyNCJe16siml2RQDt1oaXokajNP7BecWsg&s', info: 'Fungal infection spread by skin contact. Use antifungal treatments.' },
+        { name: 'Hives', symptoms: 'Raised, itchy welts.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRj4x6spDZEvdA9vwlmwNzmMonKe-z1ef7LA&s', info: 'Allergic reaction. Avoid triggers and take antihistamines.' },
+        { name: 'Stomach Flu', symptoms: 'Nausea, vomiting, diarrhea.', img: 'https://hclhealthcare.in/wp-content/uploads/2024/05/stomach-flu_final.jpg', info: 'Caused by viral infection. Stay hydrated and rest.' },
+        { name: 'Impetigo', symptoms: 'Honey-colored crusts.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1D7lsexuppYkLND72hiRkE4oRKnVGrEAqpw&s', info: 'Bacterial skin infection. Keep clean and seek treatment.' },
+        { name: 'Dermatitis Herpetiformis', symptoms: 'Itchy, blistering rash.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP9gdwdI0E6mpe6-Akj0eeaztL4YUS8HxouQ&s', info: 'Linked to gluten sensitivity. Avoid gluten and seek medical advice.' }
+      ]
+    },
+
+    '13-15': {
+      hands: [
+        { name: 'Eczema', symptoms: 'Dry, itchy, cracked skin.', img: 'https://eczema.org/wp-content/uploads/hand-eczema-shutterstock-small.jpg', info: 'Avoid allergens and use moisturizers.' },
+        { name: 'Psoriasis', symptoms: 'Thickened, scaly skin patches.', img: 'https://wmderma.com/wp-content/uploads/2022/04/psoriasis_arms1-1024x740.jpg', info: 'Chronic autoimmune condition. Use medicated creams.' },
+        { name: 'Warts', symptoms: 'Small, grainy skin growths.', img: 'https://excellencemedicalandskincareclinic.com/wp-content/uploads/2022/03/warts-treatment.webp', info: 'Caused by HPV. Use topical treatments.' },
+        { name: 'Contact Dermatitis', symptoms: 'Inflamed, red skin.', img: 'https://media.post.rvohealth.io/wp-content/uploads/2023/06/allergic-contact-dermatitis-body1-300x169.jpg', info: 'Triggered by irritants. Avoid triggers and use soothing creams.' },
+        { name: 'Hand-Foot-Mouth Disease', symptoms: 'Painful blisters on hands and feet.', img: 'https://curaprox.in/img/ybc_blog/post/thumb/hand-mouth-foot-thumbnail.webp', info: 'Viral infection. Stay hydrated and rest.' }
+      ],
+      legs: [
+        { name: 'Athlete’s Foot', symptoms: 'Scaly, itchy rash between toes.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRhMziN1dKSE787M4Nn2P2EtMWH-I4BLgGhw&s', info: 'Keep feet dry and use antifungal creams.' },
+        { name: 'Cellulitis', symptoms: 'Red, swollen skin.', img: 'https://assets.nhs.uk/nhsuk-cms/images/C0215596-Cellulitis_of_the_foot-SPL.original.max-600x600.jpg', info: 'Bacterial infection. Seek medical treatment.' },
+        { name: 'Insect Bites', symptoms: 'Swelling and itchiness.', img: 'https://post.healthline.com/wp-content/uploads/2019/12/Mosquito-Bite-1296x728-Header-1296x728.jpg', info: 'Caused by insect stings. Use antihistamines and creams.' },
+        { name: 'Shin Splints', symptoms: 'Pain along the shin bone.', img: 'https://d2yjegym0lbr1w.cloudfront.net/thumbs/shinsplints_1280.jpg?v=201701108', info: 'Caused by overuse. Rest and ice for relief.' },
+        { name: 'Knee Bursitis', symptoms: 'Swollen, painful knee.', img: 'https://www.clickphysiotherapy.com.au/wp-content/uploads/2019/07/Bursitispraepatellaris-Custom.jpg', info: 'Inflammation of knee bursae. Rest and ice.' }
+      ],
+      head: [
+        { name: 'Head Lice', symptoms: 'Itchy scalp and small nits.', img: 'https://m4b6f3p8.delivery.rocketcdn.me/app/uploads/2021/04/pediculosisCapitisHeadLice_53777_lg.jpg', info: 'Spread by head contact. Use lice treatments.' },
+        { name: 'Dandruff', symptoms: 'Flaky white scalp skin.', img: 'https://svenson.com.ph/wp-content/uploads/2024/05/dandruff-optimized.jpg', info: 'Use anti-dandruff shampoo.' },
+        { name: 'Scalp Psoriasis', symptoms: 'Flaky, itchy scalp.', img: 'https://wmderma.com/wp-content/uploads/2022/04/psoriasis_arms1-1024x740.jpg', info: 'Caused by immune system issues. Use medicated shampoos.' },
+        { name: 'Seborrheic Dermatitis', symptoms: 'Greasy, scaly patches.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDcc34uQR1ORr9cT9S_j0F_DSihXB4BPAViQ&s', info: 'Use medicated shampoos.' },
+        { name: 'Tinea Capitis', symptoms: 'Ring-shaped, scaly patches on scalp.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtc3X_NpOMOtGniprruYJeFGt8_gFg2Q0Qow&s', info: 'Fungal infection. Use antifungal medication.' }
+      ],
+      chest: [
+        { name: 'Acne', symptoms: 'Pimples and blackheads.', img: 'https://caci.co.nz/cdn/shop/articles/shutterstock_1808063740.jpg?v=1642981741&width=1900', info: 'Cleanse regularly and avoid heavy oils.' },
+        { name: 'Heat Rash', symptoms: 'Red bumps and itching.', img: 'https://m4b6f3p8.delivery.rocketcdn.me/app/uploads/2021/04/miliariaRubra_31832_lg.jpg', info: 'Caused by blocked sweat glands. Stay cool and wear loose clothes.' },
+        { name: 'Boils', symptoms: 'Painful, red lumps.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxtC8a6zj0ojtEoaHtDDKrxyQshtNP3mKyhQ&s', info: 'Bacterial infection. Keep clean and seek treatment.' },
+        { name: 'Pityriasis Rosea', symptoms: 'Oval, scaly patches.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIu90duetgsYTB4fBP6oGAEwCjplFLngswaw&s', info: 'Self-resolving rash. Stay cool and hydrated.' },
+        { name: 'Chickenpox', symptoms: 'Itchy, red blisters.', img: 'https://images-prod.healthline.com/hlcmsresource/images/Image-Galleries/chickenpox-adults/Chickenpox_man_back-1296x728-slide1.jpg', info: 'Viral infection. Stay hydrated and avoid scratching.' }
+      ],
+      abdomen: [
+        { name: 'Ringworm', symptoms: 'Circular, red, scaly patches.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJyNCJe16siml2RQDt1oaXokajNP7BecWsg&s', info: 'Fungal infection spread by skin contact. Use antifungal treatments.' },
+        { name: 'Hives', symptoms: 'Raised, itchy welts.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRj4x6spDZEvdA9vwlmwNzmMonKe-z1ef7LA&s', info: 'Allergic reaction. Avoid triggers and take antihistamines.' },
+        { name: 'Stomach Flu', symptoms: 'Nausea, vomiting, diarrhea.', img: 'https://hclhealthcare.in/wp-content/uploads/2024/05/stomach-flu_final.jpg', info: 'Viral infection. Stay hydrated and rest.' },
+        { name: 'Impetigo', symptoms: 'Honey-colored crusts.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1D7lsexuppYkLND72hiRkE4oRKnVGrEAqpw&s', info: 'Bacterial infection. Keep clean and seek treatment.' },
+        { name: 'Dermatitis Herpetiformis', symptoms: 'Itchy, blistering rash.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP9gdwdI0E6mpe6-Akj0eeaztL4YUS8HxouQ&s', info: 'Linked to gluten sensitivity. Avoid gluten and seek medical advice.' }
+      ]
+    },
+
+
+    '16-18': {
+      hands: [
+        { name: 'Eczema', symptoms: 'Dry, cracked, and itchy skin.', img: 'https://eczema.org/wp-content/uploads/hand-eczema-shutterstock-small.jpg', info: 'Avoid allergens and moisturize regularly.' },
+        { name: 'Psoriasis', symptoms: 'Thick, scaly patches on skin.', img: 'https://wmderma.com/wp-content/uploads/2022/04/psoriasis_arms1-1024x740.jpg', info: 'Use medicated creams to manage symptoms.' },
+        { name: 'Warts', symptoms: 'Small, rough skin growths.', img: 'https://excellencemedicalandskincareclinic.com/wp-content/uploads/2022/03/warts-treatment.webp', info: 'Caused by HPV. Use over-the-counter treatments.' },
+        { name: 'Contact Dermatitis', symptoms: 'Red, inflamed skin.', img: 'https://media.post.rvohealth.io/wp-content/uploads/2023/06/allergic-contact-dermatitis-body1-300x169.jpg', info: 'Avoid irritants and use soothing lotions.' },
+        { name: 'Dyshidrotic Eczema', symptoms: 'Small, itchy blisters.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQew1uq-DjRiR_HZeWjtJ6LDJP7OboFHO0iXA&s', info: 'Avoid exposure to allergens and moisturize.' }
+      ],
+      legs: [
+        { name: 'Athlete’s Foot', symptoms: 'Scaly, itchy skin on feet.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRhMziN1dKSE787M4Nn2P2EtMWH-I4BLgGhw&s', info: 'Keep feet dry and use antifungal creams.' },
+        { name: 'Cellulitis', symptoms: 'Red, swollen skin.', img: 'https://assets.nhs.uk/nhsuk-cms/images/C0215596-Cellulitis_of_the_foot-SPL.original.max-600x600.jpg', info: 'Bacterial infection. Seek medical attention.' },
+        { name: 'Shin Splints', symptoms: 'Pain in the lower legs.', img: 'https://orthoinfo.aaos.org/link/ab146592159b4927ac2ead4b5788af99.aspx', info: 'Caused by overuse. Rest and ice for relief.' },
+        { name: 'Knee Bursitis', symptoms: 'Pain and swelling around the knee.', img: 'https://www.clickphysiotherapy.com.au/wp-content/uploads/2019/07/Bursitispraepatellaris-Custom.jpg', info: 'Rest, ice, and seek medical advice if needed.' },
+        { name: 'Ringworm', symptoms: 'Red, ring-shaped rash.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJyNCJe16siml2RQDt1oaXokajNP7BecWsg&s', info: 'Fungal infection. Use antifungal medications.' }
+      ],
+      head: [
+        { name: 'Dandruff', symptoms: 'Flaky, itchy scalp.', img: 'https://svenson.com.ph/wp-content/uploads/2024/05/dandruff-optimized.jpg', info: 'Use medicated anti-dandruff shampoo.' },
+        { name: 'Scalp Psoriasis', symptoms: 'Thick, scaly patches on scalp.', img: 'https://wmderma.com/wp-content/uploads/2022/04/psoriasis_arms1-1024x740.jpg', info: 'Use medicated shampoos or creams.' },
+        { name: 'Head Lice', symptoms: 'Itchy scalp with visible nits.', img: 'https://m4b6f3p8.delivery.rocketcdn.me/app/uploads/2021/04/pediculosisCapitisHeadLice_53777_lg.jpg', info: 'Use lice combs and medicated treatments.' },
+        { name: 'Tinea Capitis', symptoms: 'Ring-shaped patches on scalp.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtc3X_NpOMOtGniprruYJeFGt8_gFg2Q0Qow&s', info: 'Fungal infection. Use antifungal medications.' },
+        { name: 'Seborrheic Dermatitis', symptoms: 'Greasy, scaly patches on scalp.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDcc34uQR1ORr9cT9S_j0F_DSihXB4BPAViQ&s', info: 'Use medicated shampoos for relief.' }
+      ],
+      chest: [
+        { name: 'Acne', symptoms: 'Pimples, blackheads, and whiteheads.', img: 'https://caci.co.nz/cdn/shop/articles/shutterstock_1808063740.jpg?v=1642981741&width=1900', info: 'Wash regularly and avoid heavy skin products.' },
+        { name: 'Boils', symptoms: 'Painful, pus-filled lumps.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxtC8a6zj0ojtEoaHtDDKrxyQshtNP3mKyhQ&s', info: 'Keep area clean and apply warm compresses.' },
+        { name: 'Heat Rash', symptoms: 'Red, itchy bumps.', img: 'https://m4b6f3p8.delivery.rocketcdn.me/app/uploads/2021/04/miliariaRubra_31832_lg.jpg', info: 'Wear loose clothing and stay cool.' },
+        { name: 'Pityriasis Rosea', symptoms: 'Scaly, oval-shaped patches.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIu90duetgsYTB4fBP6oGAEwCjplFLngswaw&s', info: 'Self-resolving. Stay hydrated and avoid heat.' },
+        { name: 'Fungal Infection', symptoms: 'Itchy, red patches on chest.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Pityriasis_versicolor_frontal_retouche.jpg/300px-Pityriasis_versicolor_frontal_retouche.jpg', info: 'Use antifungal creams.' }
+      ],
+      abdomen: [
+        { name: 'Ringworm', symptoms: 'Circular, scaly patches.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJyNCJe16siml2RQDt1oaXokajNP7BecWsg&s', info: 'Use antifungal treatments for relief.' },
+        { name: 'Hives', symptoms: 'Raised, itchy welts.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRj4x6spDZEvdA9vwlmwNzmMonKe-z1ef7LA&s', info: 'Caused by allergies. Take antihistamines.' },
+        { name: 'Impetigo', symptoms: 'Honey-colored crusts on skin.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1D7lsexuppYkLND72hiRkE4oRKnVGrEAqpw&s', info: 'Bacterial infection. Seek medical treatment.' },
+        { name: 'Contact Dermatitis', symptoms: 'Inflamed, itchy skin.', img: 'https://media.post.rvohealth.io/wp-content/uploads/2023/06/allergic-contact-dermatitis-body1-300x169.jpg', info: 'Avoid allergens and use soothing creams.' },
+        { name: 'Stomach Flu Rash', symptoms: 'Rash with nausea or vomiting.', img: 'https://www.verywellhealth.com/thmb/pnaGlW8yRZRVJs1JR1VMmmQQEHA=/640x480/filters:no_upscale():max_bytes(150000):strip_icc()/viral-maculopapular-rash-4c92466cc4e44f489224b106ee277be1.jpg', info: 'Stay hydrated and seek medical attention if needed.' }
+      ]
+    },
+
+
+    '19-21': {
+      hands: [
+        { name: 'Eczema', symptoms: 'Dry, cracked, and itchy skin.', img: 'https://eczema.org/wp-content/uploads/hand-eczema-shutterstock-small.jpg', info: 'Avoid allergens and moisturize regularly.' },
+        { name: 'Psoriasis', symptoms: 'Thick, scaly patches on skin.', img: 'https://wmderma.com/wp-content/uploads/2022/04/psoriasis_arms1-1024x740.jpg', info: 'Use medicated creams to manage symptoms.' },
+        { name: 'Contact Dermatitis', symptoms: 'Red, inflamed skin.', img: 'https://media.post.rvohealth.io/wp-content/uploads/2023/06/allergic-contact-dermatitis-body1-300x169.jpg', info: 'Avoid irritants and use soothing lotions.' },
+        { name: 'Fungal Infection', symptoms: 'Red, itchy patches on hands.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Pityriasis_versicolor_frontal_retouche.jpg/300px-Pityriasis_versicolor_frontal_retouche.jpg', info: 'Use antifungal creams.' },
+        { name: 'Dyshidrotic Eczema', symptoms: 'Small, itchy blisters.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQew1uq-DjRiR_HZeWjtJ6LDJP7OboFHO0iXA&s', info: 'Avoid allergens and moisturize.' }
+      ],
+      legs: [
+        { name: 'Athlete’s Foot', symptoms: 'Scaly, itchy skin on feet.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRhMziN1dKSE787M4Nn2P2EtMWH-I4BLgGhw&s', info: 'Keep feet dry and use antifungal creams.' },
+        { name: 'Cellulitis', symptoms: 'Red, swollen skin.', img: 'https://assets.nhs.uk/nhsuk-cms/images/C0215596-Cellulitis_of_the_foot-SPL.original.max-600x600.jpg', info: 'Bacterial infection. Seek medical attention.' },
+        { name: 'Varicose Veins', symptoms: 'Swollen, twisted veins.', img: 'https://mvsdoctors.com/wp-content/uploads/2020/06/varicose-vein-legs.jpg', info: 'Avoid prolonged standing and elevate legs.' },
+        { name: 'Knee Bursitis', symptoms: 'Pain and swelling around the knee.', img: 'https://www.clickphysiotherapy.com.au/wp-content/uploads/2019/07/Bursitispraepatellaris-Custom.jpg', info: 'Rest, ice, and seek medical advice if needed.' },
+        { name: 'Shin Splints', symptoms: 'Pain in the lower legs.', img: 'https://orthoinfo.aaos.org/link/ab146592159b4927ac2ead4b5788af99.aspx', info: 'Caused by overuse. Rest and ice for relief.' }
+      ],
+      head: [
+        { name: 'Dandruff', symptoms: 'Flaky, itchy scalp.', img: 'https://svenson.com.ph/wp-content/uploads/2024/05/dandruff-optimized.jpg', info: 'Use medicated anti-dandruff shampoo.' },
+        { name: 'Head Lice', symptoms: 'Itchy scalp with visible nits.', img: 'https://m4b6f3p8.delivery.rocketcdn.me/app/uploads/2021/04/pediculosisCapitisHeadLice_53777_lg.jpg', info: 'Use lice combs and medicated treatments.' },
+        { name: 'Scalp Psoriasis', symptoms: 'Thick, scaly patches on scalp.', img: 'https://wmderma.com/wp-content/uploads/2022/04/psoriasis_arms1-1024x740.jpg', info: 'Use medicated shampoos or creams.' },
+        { name: 'Tinea Capitis', symptoms: 'Ring-shaped patches on scalp.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtc3X_NpOMOtGniprruYJeFGt8_gFg2Q0Qow&s', info: 'Fungal infection. Use antifungal medications.' },
+        { name: 'Seborrheic Dermatitis', symptoms: 'Greasy, scaly patches on scalp.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDcc34uQR1ORr9cT9S_j0F_DSihXB4BPAViQ&s', info: 'Use medicated shampoos for relief.' }
+      ],
+      chest: [
+        { name: 'Acne', symptoms: 'Pimples, blackheads, and whiteheads.', img: 'https://caci.co.nz/cdn/shop/articles/shutterstock_1808063740.jpg?v=1642981741&width=1900', info: 'Wash regularly and avoid heavy skin products.' },
+        { name: 'Boils', symptoms: 'Painful, pus-filled lumps.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxtC8a6zj0ojtEoaHtDDKrxyQshtNP3mKyhQ&s', info: 'Keep area clean and apply warm compresses.' },
+        { name: 'Pityriasis Rosea', symptoms: 'Scaly, oval-shaped patches.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIu90duetgsYTB4fBP6oGAEwCjplFLngswaw&s', info: 'Self-resolving. Stay hydrated and avoid heat.' },
+        { name: 'Fungal Infection', symptoms: 'Itchy, red patches on chest.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Pityriasis_versicolor_frontal_retouche.jpg/300px-Pityriasis_versicolor_frontal_retouche.jpg', info: 'Use antifungal creams.' },
+        { name: 'Heat Rash', symptoms: 'Red, itchy bumps.', img: 'https://m4b6f3p8.delivery.rocketcdn.me/app/uploads/2021/04/miliariaRubra_31832_lg.jpg', info: 'Wear loose clothing and stay cool.' }
+      ],
+      abdomen: [
+        { name: 'Ringworm', symptoms: 'Circular, scaly patches.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJyNCJe16siml2RQDt1oaXokajNP7BecWsg&s', info: 'Use antifungal treatments for relief.' },
+        { name: 'Hives', symptoms: 'Raised, itchy welts.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRj4x6spDZEvdA9vwlmwNzmMonKe-z1ef7LA&s', info: 'Caused by allergies. Take antihistamines.' },
+        { name: 'Contact Dermatitis', symptoms: 'Inflamed, itchy skin.', img: 'https://media.post.rvohealth.io/wp-content/uploads/2023/06/allergic-contact-dermatitis-body1-300x169.jpg', info: 'Avoid allergens and use soothing creams.' },
+        { name: 'Impetigo', symptoms: 'Honey-colored crusts on skin.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1D7lsexuppYkLND72hiRkE4oRKnVGrEAqpw&s', info: 'Bacterial infection. Seek medical treatment.' },
+        { name: 'Stomach Flu Rash', symptoms: 'Rash with nausea or vomiting.', img: 'https://www.verywellhealth.com/thmb/pnaGlW8yRZRVJs1JR1VMmmQQEHA=/640x480/filters:no_upscale():max_bytes(150000):strip_icc()/viral-maculopapular-rash-4c92466cc4e44f489224b106ee277be1.jpg', info: 'Stay hydrated and seek medical attention if needed.' }
+      ]
+    }
+  },
+
+
+
+        female: {
+
+
+          '10-12': {
+      hands: [
+        { name: 'Eczema', symptoms: 'Dry, cracked, and itchy skin.', img: 'https://eczema.org/wp-content/uploads/hand-eczema-shutterstock-small.jpg', info: 'Avoid allergens and moisturize regularly.' },
+        { name: 'Contact Dermatitis', symptoms: 'Red, inflamed skin.', img: 'https://media.post.rvohealth.io/wp-content/uploads/2023/06/allergic-contact-dermatitis-body1-300x169.jpg', info: 'Avoid skin contact with irritants and use soothing creams.' },
+        { name: 'Fungal Infection', symptoms: 'Red, itchy skin patches.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Pityriasis_versicolor_frontal_retouche.jpg/300px-Pityriasis_versicolor_frontal_retouche.jpg', info: 'Use antifungal creams and keep skin dry.' },
+        { name: 'Warts', symptoms: 'Small, grainy skin growths.', img: 'https://excellencemedicalandskincareclinic.com/wp-content/uploads/2022/03/warts-treatment.webp', info: 'Caused by HPV. Avoid skin contact and use topical treatments.' },
+        { name: 'Dyshidrotic Eczema', symptoms: 'Small, itchy blisters on hands.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQew1uq-DjRiR_HZeWjtJ6LDJP7OboFHO0iXA&s', info: 'Avoid allergens and use moisturizers.' }
+      ],
+      legs: [
+        { name: 'Athlete’s Foot', symptoms: 'Scaly, itchy rash between toes.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRhMziN1dKSE787M4Nn2P2EtMWH-I4BLgGhw&s', info: 'Caused by fungus. Keep feet dry and use antifungal creams.' },
+        { name: 'Insect Bites', symptoms: 'Red, itchy welts.', img: 'https://post.healthline.com/wp-content/uploads/2019/12/Mosquito-Bite-1296x728-Header-1296x728.jpg', info: 'Use antihistamines or soothing creams for relief.' },
+        { name: 'Molluscum Contagiosum', symptoms: 'Small, raised bumps on the skin.', img: 'https://post.healthline.com/wp-content/uploads/2022/01/Molluscum-contagiosum-body3.jpg', info: 'A viral infection. Avoid scratching and see a doctor if needed.' },
+        { name: 'Knee Scrapes', symptoms: 'Red, open skin from falls.', img: 'https://i.redd.it/jdhrp47opria1.jpg', info: 'Clean the wound and apply antiseptic cream.' },
+        { name: 'Heat Rash', symptoms: 'Red, itchy bumps.', img: 'https://m4b6f3p8.delivery.rocketcdn.me/app/uploads/2021/04/miliariaRubra_31832_lg.jpg', info: 'Keep the area cool and dry. Wear loose clothing.' }
+      ],
+      head: [
+        { name: 'Dandruff', symptoms: 'Flaky, itchy scalp.', img: 'https://svenson.com.ph/wp-content/uploads/2024/05/dandruff-optimized.jpg', info: 'Use medicated anti-dandruff shampoo.' },
+        { name: 'Head Lice', symptoms: 'Intense scalp itching and nits.', img: 'https://m4b6f3p8.delivery.rocketcdn.me/app/uploads/2021/04/pediculosisCapitisHeadLice_53777_lg.jpg', info: 'Use lice combs and medicated treatments.' },
+        { name: 'Ringworm', symptoms: 'Circular, scaly patches on scalp.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJyNCJe16siml2RQDt1oaXokajNP7BecWsg&s', info: 'Fungal infection. Use antifungal treatments.' },
+        { name: 'Scalp Psoriasis', symptoms: 'Thick, scaly patches.', img: 'https://wmderma.com/wp-content/uploads/2022/04/psoriasis_arms1-1024x740.jpg', info: 'Use medicated creams or shampoos.' },
+        { name: 'Seborrheic Dermatitis', symptoms: 'Greasy, scaly patches on scalp.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDcc34uQR1ORr9cT9S_j0F_DSihXB4BPAViQ&s', info: 'Use medicated shampoo for relief.' }
+      ],
+      chest: [
+        { name: 'Acne', symptoms: 'Pimples and blackheads.', img: 'https://caci.co.nz/cdn/shop/articles/shutterstock_1808063740.jpg?v=1642981741&width=1900', info: 'Wash with gentle cleanser and avoid oily products.' },
+        { name: 'Heat Rash', symptoms: 'Red, itchy bumps.', img: 'https://m4b6f3p8.delivery.rocketcdn.me/app/uploads/2021/04/miliariaRubra_31832_lg.jpg', info: 'Keep area dry and wear loose clothing.' },
+        { name: 'Contact Dermatitis', symptoms: 'Red, inflamed patches.', img: 'https://media.post.rvohealth.io/wp-content/uploads/2023/06/allergic-contact-dermatitis-body1-300x169.jpg', info: 'Avoid triggers and apply soothing creams.' },
+        { name: 'Pityriasis Rosea', symptoms: 'Oval-shaped, scaly patches.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIu90duetgsYTB4fBP6oGAEwCjplFLngswaw&s', info: 'Self-limiting condition. Avoid overheating.' },
+        { name: 'Boils', symptoms: 'Painful, pus-filled lumps.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxtC8a6zj0ojtEoaHtDDKrxyQshtNP3mKyhQ&s', info: 'Apply warm compresses to the area.' }
+      ],
+      abdomen: [
+        { name: 'Ringworm', symptoms: 'Circular, scaly patches.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJyNCJe16siml2RQDt1oaXokajNP7BecWsg&shttps://via.placeholder.com/100', info: 'Use antifungal treatments.' },
+        { name: 'Contact Dermatitis', symptoms: 'Red, inflamed patches.', img: 'https://media.post.rvohealth.io/wp-content/uploads/2023/06/allergic-contact-dermatitis-body1-300x169.jpg', info: 'Avoid irritants and use soothing lotions.' },
+        { name: 'Hives', symptoms: 'Raised, itchy welts.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRj4x6spDZEvdA9vwlmwNzmMonKe-z1ef7LA&s', info: 'Take antihistamines for relief.' },
+        { name: 'Miliaria', symptoms: 'Small, red blisters.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Miliaria_rubra_mild.jpg/640px-Miliaria_rubra_mild.jpg', info: 'Keep skin cool and avoid sweating.' },
+        { name: 'Impetigo', symptoms: 'Honey-colored crusts on skin.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1D7lsexuppYkLND72hiRkE4oRKnVGrEAqpw&s', info: 'Seek medical treatment for bacterial infection.' }
+      ]
+    },
+
+    '13-15': {
+      hands: [
+        { name: 'Eczema', symptoms: 'Itchy, dry, and cracked skin.', img: 'https://eczema.org/wp-content/uploads/hand-eczema-shutterstock-small.jpg', info: 'Avoid allergens and moisturize regularly.' },
+        { name: 'Contact Dermatitis', symptoms: 'Red, inflamed skin.', img: 'https://media.post.rvohealth.io/wp-content/uploads/2023/06/allergic-contact-dermatitis-body1-300x169.jpg', info: 'Avoid skin contact with irritants and use soothing creams.' },
+        { name: 'Warts', symptoms: 'Small, grainy skin growths.', img: 'https://excellencemedicalandskincareclinic.com/wp-content/uploads/2022/03/warts-treatment.webp', info: 'Caused by HPV. Use topical treatments.' },
+        { name: 'Psoriasis', symptoms: 'Red patches with silvery scales.', img: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Psoriasis_on_back1.jpg', info: 'Use medicated creams and avoid triggers.' },
+        { name: 'Fungal Infection', symptoms: 'Red, scaly skin patches.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Pityriasis_versicolor_frontal_retouche.jpg/300px-Pityriasis_versicolor_frontal_retouche.jpg', info: 'Use antifungal treatments and keep skin dry.' }
+      ],
+      legs: [
+        { name: 'Athlete’s Foot', symptoms: 'Scaly, itchy rash between toes.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRhMziN1dKSE787M4Nn2P2EtMWH-I4BLgGhw&s', info: 'Caused by fungus. Use antifungal creams.' },
+        { name: 'Molluscum Contagiosum', symptoms: 'Small, raised skin-colored bumps.', img: 'https://post.healthline.com/wp-content/uploads/2022/01/Molluscum-contagiosum-body3.jpg', info: 'A viral skin infection. Avoid scratching.' },
+        { name: 'Insect Bites', symptoms: 'Red, itchy welts.', img: 'https://post.healthline.com/wp-content/uploads/2019/12/Mosquito-Bite-1296x728-Header-1296x728.jpg', info: 'Use antihistamines or soothing creams.' },
+        { name: 'Heat Rash', symptoms: 'Red, itchy bumps.', img: 'https://m4b6f3p8.delivery.rocketcdn.me/app/uploads/2021/04/miliariaRubra_31832_lg.jpg', info: 'Keep area cool and dry.' },
+        { name: 'Erythema Nodosum', symptoms: 'Painful, red lumps on the shins.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcVIFVhx9gemAeBWoEuSYvaG606epa2QoI5A&s', info: 'Often self-limiting. See a doctor for treatment.' }
+      ],
+      head: [
+        { name: 'Dandruff', symptoms: 'Flaky, itchy scalp.', img: 'https://svenson.com.ph/wp-content/uploads/2024/05/dandruff-optimized.jpg', info: 'Use anti-dandruff shampoo.' },
+        { name: 'Head Lice', symptoms: 'Intense scalp itching and nits.', img: 'https://m4b6f3p8.delivery.rocketcdn.me/app/uploads/2021/04/pediculosisCapitisHeadLice_53777_lg.jpg', info: 'Use medicated lice treatments and comb nits out.' },
+        { name: 'Ringworm', symptoms: 'Circular, scaly patches.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJyNCJe16siml2RQDt1oaXokajNP7BecWsg&s', info: 'Fungal infection. Use antifungal creams.' },
+        { name: 'Seborrheic Dermatitis', symptoms: 'Greasy, scaly patches.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDcc34uQR1ORr9cT9S_j0F_DSihXB4BPAViQ&s', info: 'Use medicated shampoos.' },
+        { name: 'Scalp Psoriasis', symptoms: 'Thick, scaly patches.', img: 'https://wmderma.com/wp-content/uploads/2022/04/psoriasis_arms1-1024x740.jpg', info: 'Apply medicated shampoos or treatments.' }
+      ],
+      chest: [
+        { name: 'Acne', symptoms: 'Pimples, blackheads, and whiteheads.', img: 'https://caci.co.nz/cdn/shop/articles/shutterstock_1808063740.jpg?v=1642981741&width=1900', info: 'Use gentle cleansers and avoid oily products.' },
+        { name: 'Heat Rash', symptoms: 'Red, itchy bumps.', img: 'https://m4b6f3p8.delivery.rocketcdn.me/app/uploads/2021/04/miliariaRubra_31832_lg.jpg', info: 'Keep area cool and dry.' },
+        { name: 'Contact Dermatitis', symptoms: 'Red, itchy skin patches.', img: 'https://media.post.rvohealth.io/wp-content/uploads/2023/06/allergic-contact-dermatitis-body1-300x169.jpg', info: 'Avoid irritants and use soothing creams.' },
+        { name: 'Boils', symptoms: 'Painful, pus-filled lumps.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxtC8a6zj0ojtEoaHtDDKrxyQshtNP3mKyhQ&s', info: 'Apply warm compresses to the affected area.' },
+        { name: 'Pityriasis Rosea', symptoms: 'Oval-shaped, scaly patches.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIu90duetgsYTB4fBP6oGAEwCjplFLngswaw&s', info: 'Usually self-limiting. Avoid overheating.' }
+      ],
+      abdomen: [
+        { name: 'Ringworm', symptoms: 'Circular, red patches.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJyNCJe16siml2RQDt1oaXokajNP7BecWsg&s', info: 'Use antifungal treatments.' },
+        { name: 'Hives', symptoms: 'Raised, itchy welts.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRj4x6spDZEvdA9vwlmwNzmMonKe-z1ef7LA&s', info: 'Take antihistamines for relief.' },
+        { name: 'Contact Dermatitis', symptoms: 'Red, inflamed patches.', img: 'https://media.post.rvohealth.io/wp-content/uploads/2023/06/allergic-contact-dermatitis-body1-300x169.jpg', info: 'Avoid triggers and use soothing lotions.' },
+        { name: 'Impetigo', symptoms: 'Honey-colored crusts on skin.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1D7lsexuppYkLND72hiRkE4oRKnVGrEAqpw&s', info: 'Seek treatment for bacterial infection.' },
+        { name: 'Miliaria', symptoms: 'Small, red blisters.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Miliaria_rubra_mild.jpg/640px-Miliaria_rubra_mild.jpg', info: 'Keep area cool and dry.' }
+      ]
+    },
+
+    '16-18': {
+      hands: [
+        { name: 'Eczema', symptoms: 'Itchy, dry, cracked skin.', img: 'https://ayurdhama.com/wp-content/uploads/2023/11/Eczema-6.jpg', info: 'Moisturize frequently and avoid allergens.' },
+        { name: 'Contact Dermatitis', symptoms: 'Red, inflamed skin.', img: 'https://media.post.rvohealth.io/wp-content/uploads/2023/06/allergic-contact-dermatitis-body1-300x169.jpg', info: 'Avoid skin contact with irritants and use soothing creams.' },
+        { name: 'Warts', symptoms: 'Small, grainy skin growths.', img: 'https://excellencemedicalandskincareclinic.com/wp-content/uploads/2022/03/warts-treatment.webp', info: 'Caused by HPV. Avoid skin contact and use topical treatments.' },
+        { name: 'Psoriasis', symptoms: 'Red, scaly patches of skin.', img: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Psoriasis_on_back1.jpg', info: 'Apply medicated creams and avoid triggers.' },
+        { name: 'Fungal Infection', symptoms: 'Red, itchy patches.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Pityriasis_versicolor_frontal_retouche.jpg/300px-Pityriasis_versicolor_frontal_retouche.jpg', info: 'Use antifungal creams and keep skin dry.' }
+      ],
+      legs: [
+        { name: 'Athlete’s Foot', symptoms: 'Scaly, itchy rash between toes.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRhMziN1dKSE787M4Nn2P2EtMWH-I4BLgGhw&s', info: 'Caused by a fungal infection. Keep feet dry and use antifungal creams.' },
+        { name: 'Molluscum Contagiosum', symptoms: 'Small, raised bumps.', img: 'https://post.healthline.com/wp-content/uploads/2022/01/Molluscum-contagiosum-body3.jpg', info: 'Avoid scratching and see a dermatologist if necessary.' },
+        { name: 'Insect Bites', symptoms: 'Red, itchy welts.', img: 'https://post.healthline.com/wp-content/uploads/2019/12/Mosquito-Bite-1296x728-Header-1296x728.jpg', info: 'Use antihistamines or soothing creams.' },
+        { name: 'Heat Rash', symptoms: 'Red, itchy bumps.', img: 'https://m4b6f3p8.delivery.rocketcdn.me/app/uploads/2021/04/miliariaRubra_31832_lg.jpg', info: 'Keep area cool and dry.' },
+        { name: 'Varicose Veins', symptoms: 'Swollen, twisted veins.', img: 'https://mvsdoctors.com/wp-content/uploads/2020/06/varicose-vein-legs.jpg', info: 'Avoid prolonged standing and elevate legs.' }
+      ],
+      head: [
+        { name: 'Dandruff', symptoms: 'Flaky, itchy scalp.', img: 'https://svenson.com.ph/wp-content/uploads/2024/05/dandruff-optimized.jpg', info: 'Use anti-dandruff shampoo regularly.' },
+        { name: 'Head Lice', symptoms: 'Itchy scalp with visible nits.', img: 'https://m4b6f3p8.delivery.rocketcdn.me/app/uploads/2021/04/pediculosisCapitisHeadLice_53777_lg.jpg', info: 'Use medicated lice treatments.' },
+        { name: 'Seborrheic Dermatitis', symptoms: 'Greasy, scaly patches.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDcc34uQR1ORr9cT9S_j0F_DSihXB4BPAViQ&s', info: 'Use medicated shampoos and avoid stress triggers.' },
+        { name: 'Ringworm', symptoms: 'Circular, scaly patches.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJyNCJe16siml2RQDt1oaXokajNP7BecWsg&s', info: 'Apply antifungal creams and avoid sharing hair accessories.' },
+        { name: 'Scalp Psoriasis', symptoms: 'Thick, scaly patches.', img: 'https://wmderma.com/wp-content/uploads/2022/04/psoriasis_arms1-1024x740.jpg', info: 'Use medicated shampoos and topical treatments.' }
+      ],
+      chest: [
+        { name: 'Acne', symptoms: 'Pimples, blackheads, and whiteheads.', img: 'https://caci.co.nz/cdn/shop/articles/shutterstock_1808063740.jpg?v=1642981741&width=1900', info: 'Cleanse skin gently and avoid heavy makeup.' },
+        { name: 'Heat Rash', symptoms: 'Red, itchy bumps.', img: 'https://m4b6f3p8.delivery.rocketcdn.me/app/uploads/2021/04/miliariaRubra_31832_lg.jpg', info: 'Keep the area dry and cool.' },
+        { name: 'Contact Dermatitis', symptoms: 'Red, itchy patches.', img: 'https://media.post.rvohealth.io/wp-content/uploads/2023/06/allergic-contact-dermatitis-body1-300x169.jpg', info: 'Avoid triggers and apply soothing creams.' },
+        { name: 'Boils', symptoms: 'Painful, pus-filled lumps.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxtC8a6zj0ojtEoaHtDDKrxyQshtNP3mKyhQ&s', info: 'Apply warm compresses and keep the area clean.' },
+        { name: 'Pityriasis Versicolor', symptoms: 'Discolored, scaly patches.', img: 'https://assets.nhs.uk/nhsuk-cms/images/C0506764-Pityriasis_versicolor_copy.original.width-320.jpg', info: 'Use antifungal treatments.' }
+      ],
+      abdomen: [
+        { name: 'Ringworm', symptoms: 'Circular, red patches.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJyNCJe16siml2RQDt1oaXokajNP7BecWsg&s', info: 'Apply antifungal creams.' },
+        { name: 'Hives', symptoms: 'Raised, itchy welts.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRj4x6spDZEvdA9vwlmwNzmMonKe-z1ef7LA&s', info: 'Take antihistamines for relief.' },
+        { name: 'Contact Dermatitis', symptoms: 'Red, inflamed patches.', img: 'https://media.post.rvohealth.io/wp-content/uploads/2023/06/allergic-contact-dermatitis-body1-300x169.jpg', info: 'Avoid irritants and use soothing creams.' },
+        { name: 'Impetigo', symptoms: 'Honey-colored crusts.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1D7lsexuppYkLND72hiRkE4oRKnVGrEAqpw&s', info: 'Seek treatment for bacterial infection.' },
+        { name: 'Miliaria', symptoms: 'Small, red blisters.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Miliaria_rubra_mild.jpg/640px-Miliaria_rubra_mild.jpg', info: 'Keep skin dry and cool.' }
+      ]
+    },
+
+    '19-21': {
+      hands: [
+        { name: 'Eczema', symptoms: 'Dry, itchy, inflamed skin.', img: 'https://eczema.org/wp-content/uploads/hand-eczema-shutterstock-small.jpg', info: 'Moisturize frequently and avoid allergens.' },
+        { name: 'Psoriasis', symptoms: 'Red, scaly patches.', img: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Psoriasis_on_back1.jpg', info: 'Apply medicated creams and avoid triggers like stress.' },
+        { name: 'Warts', symptoms: 'Small, grainy growths.', img: 'https://excellencemedicalandskincareclinic.com/wp-content/uploads/2022/03/warts-treatment.webp', info: 'Caused by HPV. Use topical treatments or consult a doctor.' },
+        { name: 'Fungal Infection', symptoms: 'Red, itchy skin.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Pityriasis_versicolor_frontal_retouche.jpg/300px-Pityriasis_versicolor_frontal_retouche.jpg', info: 'Use antifungal creams and keep skin dry.' },
+        { name: 'Raynaud’s Phenomenon', symptoms: 'Cold fingers with color changes.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Raynaud_syndrome_on_female_airman%27s_hand.jpg/330px-Raynaud_syndrome_on_female_airman%27s_hand.jpg', info: 'Keep hands warm and avoid cold exposure.' }
+      ],
+      legs: [
+        { name: 'Varicose Veins', symptoms: 'Swollen, twisted veins.', img: 'https://mvsdoctors.com/wp-content/uploads/2020/06/varicose-vein-legs.jpg', info: 'Elevate legs and avoid prolonged standing.' },
+        { name: 'Athlete’s Foot', symptoms: 'Itchy, scaly skin between toes.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRhMziN1dKSE787M4Nn2P2EtMWH-I4BLgGhw&s', info: 'Use antifungal creams and keep feet dry.' },
+        { name: 'Cellulitis', symptoms: 'Red, swollen skin.', img: 'https://assets.nhs.uk/nhsuk-cms/images/C0215596-Cellulitis_of_the_foot-SPL.original.max-600x600.jpg', info: 'Caused by bacterial infection. Seek antibiotics if needed.' },
+        { name: 'Contact Dermatitis', symptoms: 'Red, inflamed patches.', img: 'https://media.post.rvohealth.io/wp-content/uploads/2023/06/allergic-contact-dermatitis-body1-300x169.jpg', info: 'Avoid triggers and apply soothing creams.' },
+        { name: 'Folliculitis', symptoms: 'Small red bumps or pustules.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-NeIvmpQNHhXN-ix1nhSdzhxp7lsSrhdcnw&s', info: 'Apply warm compresses and keep area clean.' }
+      ],
+      head: [
+        { name: 'Dandruff', symptoms: 'Flaky, itchy scalp.', img: 'https://svenson.com.ph/wp-content/uploads/2024/05/dandruff-optimized.jpg', info: 'Use anti-dandruff shampoos.' },
+        { name: 'Seborrheic Dermatitis', symptoms: 'Scaly, greasy patches.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDcc34uQR1ORr9cT9S_j0F_DSihXB4BPAViQ&s', info: 'Use medicated shampoos and avoid harsh hair products.' },
+        { name: 'Scalp Psoriasis', symptoms: 'Thick, scaly patches on scalp.', img: 'https://wmderma.com/wp-content/uploads/2022/04/psoriasis_arms1-1024x740.jpg', info: 'Apply medicated shampoos and topical treatments.' },
+        { name: 'Head Lice', symptoms: 'Itchy scalp with visible nits.', img: 'https://m4b6f3p8.delivery.rocketcdn.me/app/uploads/2021/04/pediculosisCapitisHeadLice_53777_lg.jpg', info: 'Use medicated lice treatments and comb thoroughly.' },
+        { name: 'Ringworm of Scalp', symptoms: 'Circular, scaly patches.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJyNCJe16siml2RQDt1oaXokajNP7BecWsg&s', info: 'Use antifungal treatments and avoid sharing combs.' }
+      ],
+      chest: [
+        { name: 'Acne', symptoms: 'Pimples and blackheads.', img: 'https://caci.co.nz/cdn/shop/articles/shutterstock_1808063740.jpg?v=1642981741&width=1900', info: 'Cleanse gently and avoid oily products.' },
+        { name: 'Heat Rash', symptoms: 'Red, itchy bumps.', img: 'https://m4b6f3p8.delivery.rocketcdn.me/app/uploads/2021/04/miliariaRubra_31832_lg.jpg', info: 'Keep skin cool and dry.' },
+        { name: 'Contact Dermatitis', symptoms: 'Red, inflamed skin.', img: 'https://media.post.rvohealth.io/wp-content/uploads/2023/06/allergic-contact-dermatitis-body1-300x169.jpg', info: 'Avoid irritants and apply soothing creams.' },
+        { name: 'Boils', symptoms: 'Painful, pus-filled lumps.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxtC8a6zj0ojtEoaHtDDKrxyQshtNP3mKyhQ&s', info: 'Apply warm compresses and keep area clean.' },
+        { name: 'Pityriasis Versicolor', symptoms: 'Discolored, scaly patches.', img: 'https://assets.nhs.uk/nhsuk-cms/images/C0506764-Pityriasis_versicolor_copy.original.width-320.jpg', info: 'Use antifungal treatments and avoid excessive sweating.' }
+      ],
+      abdomen: [
+        { name: 'Contact Dermatitis', symptoms: 'Red, inflamed skin patches.', img: 'https://media.post.rvohealth.io/wp-content/uploads/2023/06/allergic-contact-dermatitis-body1-300x169.jpg', info: 'Avoid skin irritants and apply soothing creams.' },
+        { name: 'Hives', symptoms: 'Raised, itchy welts.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRj4x6spDZEvdA9vwlmwNzmMonKe-z1ef7LA&s', info: 'Use antihistamines to reduce itching.' },
+        { name: 'Ringworm', symptoms: 'Circular, red, scaly patches.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYJyNCJe16siml2RQDt1oaXokajNP7BecWsg&s', info: 'Apply antifungal creams regularly.' },
+        { name: 'Miliaria', symptoms: 'Small, itchy blisters.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Miliaria_rubra_mild.jpg/640px-Miliaria_rubra_mild.jpg', info: 'Keep skin cool and avoid sweating.' },
+        { name: 'Fungal Infection', symptoms: 'Red, itchy patches.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Pityriasis_versicolor_frontal_retouche.jpg/300px-Pityriasis_versicolor_frontal_retouche.jpg', info: 'Use antifungal creams and maintain hygiene.' }
+      ]
+    }
+          
+        }
+      };
+
+      let diseases = diseaseData[gender]?.[age]?.[bodyPart] || [{ name: 'No data available for the selected criteria.', symptoms: '', img: '', info: '' }];
+
+      document.getElementById('result-section').style.display = 'block';
+      document.getElementById('disease-list').innerHTML = diseases.map(disease => `
+        <div class="disease-item">
+          <img src="${disease.img}" alt="${disease.name}">
+          <div class="disease-details">
+            <div class="disease-name">${disease.name}</div>
+            <div class="disease-symptoms">Symptoms: ${disease.symptoms}</div>
+            <div class="disease-info">Info: ${disease.info}</div>
+          </div>
+        </div>
+      `).join('');
+    });
+  </script>
+</body>
+</html>

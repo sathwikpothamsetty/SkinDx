@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkinDx</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <style>
+
+
+/* General Styles for <h> Tag */
+    h {
+    font-family: 'Arial', sans-serif; /* Clean, readable font */
+    font-weight: bold;               /* Bold text for emphasis */
+    font-size: 2rem;                 /* Base font size for heading */
+    line-height: 1.4;                /* Better readability with line spacing */
+    letter-spacing: 0.5px;           /* Subtle spacing between letters */
+    color: #333;                     /* Dark color for text contrast */
+    text-align: left;                /* Align text to the left for structure */
+    margin: 20px 0;                  /* Space above and below the heading */
+    padding: 0 10px;                 /* Padding for breathing room */
+    transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover */
+}
+
+/* Hover Effect for Interaction */
+h:hover {
+    color: #007BFF;                 /* Change color on hover */
+    transform: scale(1.05);          /* Slightly enlarge the text on hover */
+}
+
+/* Responsive Design for Smaller Screens */
+@media screen and (max-width: 768px) {
+    h {
+        font-size: 1.5rem;            /* Adjust font size on smaller screens */
+    }
+}
+
+
+
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #e5e7eb;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #1f2937, #111827);
+        }
+        .hover-scale {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-scale:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        .tech-lines {
+            background-image: url('https://www.transparenttextures.com/patterns/connected.png');
+            opacity: 0.1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+        .glow {
+            box-shadow: 0 0 20px rgba(165, 180, 252, 0.5);
+        }
+
+        /* General styles */
+
+.swiper-container {
+    width: 100%;
+    padding: 20px 0;
+}
+
+.swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    text-align: center;
+}
+
+.swiper-slide .flex-1 {
+    flex: 1;
+    max-width: 400px;
+    text-align: center;
+}
+
+.swiper-slide img {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: contain;
+    border-radius: 10px;
+    background-color: white;
+    padding: 10px;
+}
+
+.swiper-slide h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.swiper-slide p {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Swiper Navigation */
+.swiper-button-next, .swiper-button-prev {
+    color: #333;
+}
+
+.swiper-pagination-bullet-active {
+    background: #333;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header {
+    background-color: #2c3e50;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Upload Section */
+#upload-section {
+    margin: 50px auto;
+    padding: 20px;
+    background: rgb(255, 255, 255);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 50%;
+}
+
+/* Drop Area */
+#drop-area {
+    border: 2px dashed #2c3e50;
+    padding: 30px;
+    cursor: pointer;
+    background-color: #ecf0f1;
+    border-radius: 10px;
+}
+
+#drop-area:hover {
+    background-color: #d5dbdb;
+}
+
+#drop-area p {
+    font-size: 16px;
+    color: #34495e;
+}
+
+/* Image Preview */
+#preview {
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Button */
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+/* Loader */
+.loader {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+    display: none;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Result Text */
+#result {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+    color: #2c3e50;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+    </style>
+</head>
+<body class="gradient-bg">
+    <!-- Tech Lines Background -->
+    <div class="tech-lines"></div>
+
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center p-6 bg-black bg-opacity-50 backdrop-blur-md relative z-10">
+        <h1 class="text-2xl font-bold text-purple-500">SkinDx</h1>
+        <div class="space-x-6">
+            <a href="{{ url_for('possibility') }}" class="text-gray-300 hover:text-purple-500 transition-colors">Search skin Diseases</a>
+            <a href="{{ url_for('about') }}" class="text-gray-300 hover:text-purple-500 transition-colors">About</a>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="relative text-center text-white">
+        <img src="https://images.unsplash.com/photo-1622819584099-e04ccb14e8a7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1932&q=80" alt="Skin Condition" class="w-full h-[500px] object-cover">
+        <div class="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-60">
+            <h2 class="text-4xl font-bold mb-4">Explore various skin conditions for self-assessment.</h2>
+        </div>
+    </section>
+    
+   <!-- Techy Graphics Section -->
+<section class="p-8 relative z-10">
+    <!-- Slide 1: Choose the skin disease image -->
+    <div class="flex flex-col md:flex-row items-center justify-center gap-8 mb-8">
+        <div class="flex-1">
+            <h2 class="text-3xl font-bold mb-4">Choose the Skin Disease Image</h2>
+            <p class="text-gray-400">Select an image of the skin condition you want to analyze from our extensive database or your device.</p>
+        </div>
+        <div class="flex-1">
+            <img src="https://i.pinimg.com/originals/a6/a6/ff/a6a6ff24e84d230fed0db0408ccda021.gif" alt="Choose Image" class="w-full h-65 object-cover rounded-lg">
+        </div>
+        
+    </div>
+
+    <!-- Slide 2: Upload the skin disease image -->
+    <div class="flex flex-col md:flex-row items-center justify-center gap-8 mb-8">
+        <div class="flex-1">
+            <img src="https://cdn.dribbble.com/userupload/22365583/file/original-5e468e36be7758793c3d78386d7b3f7b.gif" alt="Upload Image" class="w-full h-65 object-cover rounded-lg">
+        </div>
+        <div class="flex-1">
+            <h2 class="text-3xl font-bold mb-4">Upload the Skin Disease Image</h2>
+            <p class="text-gray-400">Easily upload your skin condition image for analysis. Our system supports JPG, PNG, and JPEG formats.</p>
+        </div>
+    </div>
+
+    <!-- Slide 3: Get the output -->
+    <div class="flex flex-col md:flex-row items-center justify-center gap-8 mb-8">
+        <div class="flex-1">
+            <h2 class="text-3xl font-bold mb-4">Get the Output</h2>
+            <p class="text-gray-400">Receive instant, accurate results about your skin condition, including possible diagnoses and treatment recommendations.</p>
+        </div>
+        <div class="flex-1">
+            <img src="https://i.gifer.com/7nK2.gif" alt="Get Output" class="w-full h-65 object-cover rounded-lg">
+        </div>
+        
+    </div>
+
+    <!-- Slide 4: Ask doubts to chatbot if you have any -->
+    <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+        <div class="flex-1">
+            <img src="https://cdn-icons-gif.flaticon.com/11184/11184177.gif" alt="Chatbot" class="w-full h-65 object-cover rounded-lg">
+        </div>
+        <div class="flex-1">
+            <h2 class="text-3xl font-bold mb-4">Ask Doubts to Chatbot</h2>
+            <p class="text-gray-400">Have questions? Our AI-powered chatbot is here to help. Get instant answers and guidance for your skin concerns.</p>
+        </div>
+    </div>
+</section>
+
+<h>MAJOR SKIN PROBLEMS</h>
+    <!-- Categories -->
+<div class="flex flex-wrap justify-center gap-6 p-8 relative z-10">
+    <!-- Acne -->
+    <div class="bg-gray-800 shadow-lg rounded-lg hover-scale glow w-64">
+        <button class="px-8 py-4 w-full">
+            <img src="https://assets.clevelandclinic.org/transform/fc52e376-b64a-4bfe-a219-9fa3ecdd3c2a/acne-on-face-1326434308-770x533-1_jpg" alt="Acne" class="w-16 h-16 mx-auto">
+            <p class="mt-2 text-gray-300">Acne</p>
+        </button>
+        <div class="p-4 border-t border-gray-700">
+            <h3 class="text-lg font-semibold">Acne</h3>
+            <p class="text-gray-400 mt-2">A skin condition that occurs when hair follicles become clogged with oil and dead skin cells.</p>
+            <p class="text-gray-400 mt-2"><strong>Common Treatments:</strong> Topical creams, antibiotics, and lifestyle changes.</p>
+            <br>
+            <form action="{{ url_for('acne') }}">
+                <button type="submit">Know More</button>
+            </form>
+            
+        </div>
+    </div>
+
+    <!-- Eczema -->
+    <div class="bg-gray-800 shadow-lg rounded-lg hover-scale glow w-64">
+        <button class="px-8 py-4 w-full">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKV03iPxrXDwnQDwUIUWkCeNUv4-xrxDGhtw&s" alt="Eczema" class="w-16 h-16 mx-auto">
+            <p class="mt-2 text-gray-300">Eczema</p>
+        </button>
+        <div class="p-4 border-t border-gray-700">
+            <h3 class="text-lg font-semibold">Eczema</h3>
+            <p class="text-gray-400 mt-2">A condition that makes your skin red and itchy. It's common in children but can occur at any age.</p>
+            <p class="text-gray-400 mt-2"><strong>Common Treatments:</strong> Moisturizers, steroid creams, and antihistamines.</p>
+            <br>
+            <form action="{{ url_for('Eczema') }}">
+
+                <button type="submit">Know More</button>
+
+            </form>
+            
+        </div>
+    </div>
+
+    <!-- Ringworm -->
+    <div class="bg-gray-800 shadow-lg rounded-lg hover-scale glow w-64">
+        <button class="px-8 py-4 w-full">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMqTc-7pjwSQ5I-lX0BWWdObx6AEGMtnXtkQ&s" alt="Ringworm" class="w-16 h-16 mx-auto">
+            <p class="mt-2 text-gray-300">Ringworm</p>
+        </button>
+        <div class="p-4 border-t border-gray-700">
+            <h3 class="text-lg font-semibold">Ringworm</h3>
+            <p class="text-gray-400 mt-2">A fungal infection that causes a ring-shaped rash on the skin.</p>
+            <p class="text-gray-400 mt-2"><strong>Common Treatments:</strong> Antifungal creams, oral medications, and keeping the area dry.</p>
+            <br>
+            <form action="{{ url_for('ringworm') }}">
+                <button type="submit">Know More</button>
+            </form>
+            
+        </div>
+    </div>
+
+    <!-- Scabies -->
+    <div class="bg-gray-800 shadow-lg rounded-lg hover-scale glow w-64">
+        <button class="px-8 py-4 w-full">
+            <img src="https://skinsurgeryclinic.co.uk/wp-content/uploads/2024/03/scabies-1.jpg" alt="Scabies" class="w-16 h-16 mx-auto">
+            <p class="mt-2 text-gray-300">Scabies</p>
+        </button>
+        <div class="p-4 border-t border-gray-700">
+            <h3 class="text-lg font-semibold">Scabies</h3>
+            <p class="text-gray-400 mt-2">A contagious skin condition caused by tiny mites that burrow into the skin.</p>
+            <p class="text-gray-400 mt-2"><strong>Common Treatments:</strong> Prescription creams and oral medications.</p>
+            <br>
+            <form action="{{ url_for('Scabies') }}">
+                <button type="submit">Know More</button>
+            </form>
+            
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<h2>Skin Disease Detection</h2>
+
+<div id="upload-section">
+    <input type="file" id="imageInput" accept="image/*" onchange="previewImage()">
+    <br>
+    <img id="preview" src="#" alt="Image Preview" style="display: none;">
+    <br>
+    <button onclick="uploadImage()">Predict Disease</button>
+    <p id="result"></p>
+</div>
+
+<script>
+    function previewImage() {
+        const file = document.getElementById("imageInput").files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById("preview").src = e.target.result;
+                document.getElementById("preview").style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function uploadImage() {
+        const fileInput = document.getElementById("imageInput");
+        if (fileInput.files.length === 0) {
+            alert("Please select an image first.");
+            return;
+        }
+
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append("file", file);
+
+        fetch("/predict", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById("result").innerHTML = `<span style="color: red;">Error: ${data.error}</span>`;
+            } else {
+                document.getElementById("result").innerHTML = 
+                    `<strong>Prediction:</strong> ${data.prediction} <br> 
+                     <strong>Confidence:</strong> ${data.confidence}`;
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Error making prediction. Check console for details.");
+        });
+    }
+</script>
+
+
+
+
+
+    <!-- Footer -->
+    <footer class="bg-black bg-opacity-50 p-8 text-center mt-8 backdrop-blur-md relative z-10">
+        <h2 class="text-2xl font-bold text-purple-500">SkinDX</h2>
+        <p class="text-gray-400 mt-2">Information, privacy, terms</p>
+        <div class="mt-4 space-x-4">
+            <a href="#" class="text-gray-400 hover:text-purple-500 transition-colors">Privacy Policy</a>
+            <a href="#" class="text-gray-400 hover:text-purple-500 transition-colors">Terms of Service</a>
+            <a href="#" class="text-gray-400 hover:text-purple-500 transition-colors">Contact Us</a>
+        </div>
+    </footer>
+<script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
+<script src="https://files.bpcontent.cloud/2025/02/17/13/20250217135504-IRP13STC.js"></script>
+</body>
+
+</html>
