@@ -14,7 +14,7 @@ Welcome to **SkinDx**, an AI-powered skin disease detection and information plat
    - The model also provides a **confidence percentage** for the detected condition.
 
 3. **Integrated AI Chatbot**
-   - To help users learn more about detected diseases, we integrated an **AI-powered chatbot**.
+   - To help users learn more about  detected diseases, we integrated an **AI-powered chatbot**.
    - Users can **enter a disease name** to receive detailed information about symptoms, causes, and treatment options.
 
 ## Technologies Used
