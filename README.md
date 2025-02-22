@@ -1,4 +1,4 @@
-SkinDx - AI Powered Skin Diagnosis
+**SkinDx - AI Powered Skin Diagnosis**
 
 Overview
 Welcome to 'SkinDx', an AI-powered skin disease detection and information platform! Our goal is to help users identify and understand various skin conditions, with a special focus on common issues prevalent in India, such as **eczema, psoriasis, fungal infections, and pigmentation disorders.
