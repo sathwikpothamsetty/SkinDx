@@ -45,7 +45,7 @@ Welcome to **SkinDx**, an AI-powered skin disease detection and information plat
 We welcome contributions! If you have suggestions or want to improve the model, feel free to create a pull request or open an issue.
 
 ## Contact
-For inquiries or collaborations, reach out to us at **[Your Email/Website]**
+For inquiries or collaborations, reach out to us at **[jaswanthgangisetti@gmail.com]**
 
 ---
 ### 🚀 Empowering Users with AI-driven Skin Health Awareness!
