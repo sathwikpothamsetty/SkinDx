@@ -24,8 +24,28 @@ Welcome to **SkinDx**, an AI-powered skin disease detection and information plat
 - **Frontend**: React/HTML-CSS for user interface
 - **AI Chatbot**: API-based chatbot for disease information
 
-##Datasets
+## Datasets
 - https://www.kaggle.com/datasets/shubhamgoel27/dermnet?resource=download
+
+## Directory 
+skindx/
+│── app.py  
+│── index.html  
+│── train_skin_model.py  
+│── class_indices.json  
+│── skin_disease_model.keras  
+│── templates/  
+│   ├── index.html  
+│   ├── possibility.html  
+│   ├── about.html  
+│   ├── acne.html  
+│   ├── Eczema.html  
+│   ├── ringworm.html  
+│   ├── Scabies.html   
+│── uploads/  
+│── requirements.txt
+│── README.md
+
 
 ## Features
 ✔ **AI-powered skin disease detection**  
