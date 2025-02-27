@@ -68,7 +68,7 @@ skindx/
 We welcome contributions! If you have suggestions or want to improve the model, feel free to create a pull request or open an issue.
 
 ## Contact
-For inquiries or collaborations, reach out to us at **[jaswanthgangisetti@gmail.com]**
+For inquiries or collaborations, reach out to us at **[jaswanth.gangisetti@gmail.com]**
 
 ---
 ### 🚀 Empowering Users with AI-driven Skin Health Awareness!
